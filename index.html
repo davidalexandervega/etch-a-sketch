@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css.css">
-    <title></title>
+    <title>etch-a-sketch.</title>
 </head>
 <body>
+    <button id="modeButton" onclick="setMode()">mode: free</button>
+    <button onclick="clearSketch()">clear</button>
+    <button onclick="populate(100)">10x10</button>
+    <button onclick="populate(256)">16x16</button>
+    <button onclick="populate(625)">25x25</button>
     <div id="container"></div>
 
     <script src="js.js"></script>
