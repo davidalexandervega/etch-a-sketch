@@ -2,6 +2,9 @@
 let size = 100;
 let mode = 'free';
 let ink = 'ON';
+let inkColor = 'black';
+let grid = '1px solid black';
+document.documentElement.style.setProperty("--grid", grid);
 populate(100);
 
 function populate(size) {
@@ -42,6 +45,37 @@ function setMode() {
     sketch(mode);
 }
 
+function setColor() {
+    const colorButton = document.querySelector('#colorButton')
+    if (inkColor === 'black') {
+        colorButton.innerHTML = 'ink: color'
+        inkColor = 'color';
+    }
+    else if (inkColor === 'color') {
+        colorButton.innerHTML = 'ink: black'
+        inkColor = 'black';
+    }
+}
+
+function pastel() {
+    let hue = Math.floor(Math.random() * (359 + 1));
+    let pastelColor = `hsl(${hue}, 100%, 85%)`;
+    return pastelColor;
+}
+
+function setGrid() {
+    const gridButton = document.querySelector('#gridButton')
+    if (grid === '1px solid black') {
+        gridButton.innerHTML = 'grid: off'
+        grid = 'none';
+    }
+    else if (grid === 'none') {
+        gridButton.innerHTML = 'grid: on'
+        grid = '1px solid black';
+    }
+    document.documentElement.style.setProperty("--grid", grid);
+}
+
 // using a named function allows us to add or remove the click
 // listener depending upon the current mode. otherwise the
 // 'add' and 'remove' do not refer to each other.
@@ -59,7 +93,12 @@ function sketch(mode) {
     squares.forEach((square) => {
         square.addEventListener('mouseenter', () => {
             if (ink === 'ON') {
-                square.setAttribute('style', 'background-color: black');
+                if (inkColor === 'black') {
+                    square.setAttribute('style', 'background-color: black');
+                }
+                else if (inkColor === 'color') {
+                    square.setAttribute('style', `background-color: ${pastel()}`)
+                }
             }
         });     
     });
