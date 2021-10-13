@@ -3,7 +3,7 @@ let size = 100;
 let mode = 'free';
 let ink = 'ON';
 let inkColor = 'black';
-let grid = '1px solid black';
+let grid = 'none';
 document.documentElement.style.setProperty("--grid", grid);
 populate(100);
 

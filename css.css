@@ -1,18 +1,54 @@
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    background-color: snow;
+}
+
+#title {
+    margin-top: 45px;
+    margin-left: 75px;
+    font-size: 20px;
+    font-weight: 575;
+    font-style: italic;
+}
+
+button {
+    font-family: inherit;
+    padding: 5px 5px;
+    margin: 5px;
+}
+
+#interface {
+    margin-top: 35px;
+    display: flex;
+}
+
+#buttons {
+    display: flex;
+    flex-direction: column;
+    margin-left: 45px;
+    gap: 25px;
+}
+
+#functionals {
+    display: flex;
+    justify-content: space-between;
+}
+
 #container {
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
-    width: 400px;
-    height: 400px;
+    width: 450px;
+    height: 450px;
     margin-left: auto;
-    margin-right: auto;
-    margin-top: 100px;
-    border: 1px solid black;
+    margin-right: 400px;
+    outline: 1px solid black;
 }
 
 .square {
     width: var(--size);
     height: var(--size);
     box-sizing: border-box;
-    border: var(--grid);
+    outline: var(--grid);
+    background-color: white;
 }
