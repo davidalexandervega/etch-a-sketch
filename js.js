@@ -118,7 +118,6 @@ function paintBackground() {
         // this way, if any of the squares are currently neither black nor white, they retain their color
         // when the background color is changed:
             let currentColor = window.getComputedStyle(square).getPropertyValue('background-color');
-            console.log(currentColor)
             if (currentColor === 'rgb(0, 0, 0)' || currentColor === 'rgb(255, 255, 255)') {
                 square.setAttribute('style', `background-color: ${backgroundColor}`);
             }
