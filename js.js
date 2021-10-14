@@ -1,11 +1,13 @@
 // setting defaults:
-let size = 100;
+let size = 625;
 let mode = 'free';
 let ink = 'ON';
 let inkColor = 'black';
-let grid = 'none';
+let grid = '1px solid black';
+let backgroundColor = 'white';
 document.documentElement.style.setProperty("--grid", grid);
-populate(100);
+document.documentElement.style.setProperty("--backgroundColor", backgroundColor);
+populate(625);
 
 function populate(size) {
     // this way the '--size' variable in the css corresponds to the
@@ -25,20 +27,24 @@ function populate(size) {
     // because it contains the conditionals that decide whether
     // or not a square will be filled.
     sketch(mode);
+    clearSketch();
 }
 
 function setMode() {
     // so that one toggle button can be used:
     const modeButton = document.querySelector('#modeButton');
+    const infoText = document.querySelector('#infoText');
     if (mode === 'free') {
         modeButton.innerHTML = 'mode: toggle';
         mode = 'toggle';
         ink = 'OFF';
+        infoText.innerHTML = `in <i><b>toggle sketch</b></i> mode, you can click over the sketch area to toggle ink on and off. the ink is currently <i><b>${ink}</b></i>.`
     }
     else if (mode === 'toggle') {
         modeButton.innerHTML = 'mode: free';
         mode = 'free';
         ink = 'ON';
+        infoText.innerHTML = 'in <i><b>free sketch</b></i> mode, your cursor will paint squares as it passes through the sketch area.'
     }
 
     // see above.
@@ -52,9 +58,14 @@ function setColor() {
         inkColor = 'color';
     }
     else if (inkColor === 'color') {
+        colorButton.innerHTML = 'ink: white'
+        inkColor = 'white';
+    }
+    else if (inkColor === 'white') {
         colorButton.innerHTML = 'ink: black'
         inkColor = 'black';
     }
+
 }
 
 function pastel() {
@@ -65,15 +76,60 @@ function pastel() {
 
 function setGrid() {
     const gridButton = document.querySelector('#gridButton')
-    if (grid === '1px solid black') {
+    if (grid === '1px solid black' || grid === '1px solid white') {
         gridButton.innerHTML = 'grid: off'
         grid = 'none';
     }
     else if (grid === 'none') {
         gridButton.innerHTML = 'grid: on'
-        grid = '1px solid black';
+        if (backgroundColor === 'white') {
+            grid = '1px solid black';
+        }
+        else if (backgroundColor === 'black') {
+            grid = '1px solid white';
+        }
     }
     document.documentElement.style.setProperty("--grid", grid);
+}
+
+function setBackground() {
+    const backgroundButton = document.querySelector('#backgroundButton')
+    if (backgroundColor === 'white') {
+        backgroundButton.innerHTML = 'background: black'
+        backgroundColor = 'black';
+        if (grid === '1px solid black') {
+            grid = '1px solid white';
+        }
+    }
+    else if (backgroundColor === 'black') {
+        backgroundButton.innerHTML = 'background: white'
+        backgroundColor = 'white';
+        if (grid === '1px solid white') {
+            grid = '1px solid black';
+        }
+    }
+    paintBackground();
+    document.documentElement.style.setProperty("--grid", grid);
+}
+
+function paintBackground() {
+    const squares = document.querySelectorAll('.square');
+    squares.forEach((square) => {
+        // this way, if any of the squares are currently neither black nor white, they retain their color
+        // when the background color is changed:
+            let currentColor = window.getComputedStyle(square).getPropertyValue('background-color');
+            console.log(currentColor)
+            if (currentColor === 'rgb(0, 0, 0)' || currentColor === 'rgb(255, 255, 255)') {
+                square.setAttribute('style', `background-color: ${backgroundColor}`);
+            }
+    });
+}
+
+function clearSketch() {
+    const squares = document.querySelectorAll('.square');
+    squares.forEach((square) => {
+        square.setAttribute('style', `background-color: ${backgroundColor}`);
+    });
 }
 
 // using a named function allows us to add or remove the click
@@ -86,6 +142,8 @@ function inkSwitch () {
     else if (ink === 'OFF') {
         ink = 'ON';
     }
+    const infoText = document.querySelector('#infoText');
+    infoText.innerHTML = `in <i><b>toggle sketch</b></i> mode, you can click over the sketch area to toggle ink on and off. the ink is currently <i><b>${ink}</b></i>.`
 }
 
 function sketch(mode) {
@@ -98,6 +156,9 @@ function sketch(mode) {
                 }
                 else if (inkColor === 'color') {
                     square.setAttribute('style', `background-color: ${pastel()}`)
+                }
+                else if (inkColor === 'white') {
+                    square.setAttribute('style', 'background-color: white');
                 }
             }
         });     
@@ -113,12 +174,4 @@ function sketch(mode) {
             square.removeEventListener('click', inkSwitch);
         });
     }
-}
-
-function clearSketch() {
-    const squares = document.querySelectorAll('.square');
-    squares.forEach((square) => {
-        square.setAttribute('style', 'background-color: white');
-    });
-    return 'cleared.';
 }

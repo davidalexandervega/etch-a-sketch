@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css.css">
+    <link rel="icon" href="e.png">
     <title>etch-a-sketch.</title>
 </head>
 <body>
@@ -13,7 +14,8 @@
             <div id="functionals">
                 <button id="modeButton" onclick="setMode()">mode: free</button>
                 <button id="colorButton" onclick="setColor()">ink: black</button>
-                <button id="gridButton" onclick="setGrid()">grid: off</button>
+                <button id="gridButton" onclick="setGrid()">grid: on</button>
+                <button id="backgroundButton" onclick="setBackground()">background: white</button>
                 <button onclick="clearSketch()">clear</button>
             </div>
             <div id="sizers">
@@ -23,6 +25,7 @@
             <button onclick="populate(1296)">36x36</button>
             <button onclick="populate(4096)">64x64</button>
             </div>
+            <div id="infoText">in <i><b>free sketch</b></i> mode, your cursor will paint squares as it passes through the sketch area.</div>
         </div>
         <div id="container"></div>
     </div>
